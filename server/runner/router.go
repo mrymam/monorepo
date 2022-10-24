@@ -3,14 +3,14 @@ package runner
 import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	rtr "github.com/onyanko-pon/monorepo/server/svc/router"
+	post "github.com/onyanko-pon/monorepo/server/svc/post/router"
 )
 
 type router func(e *echo.Group) error
 
 func NewRouter(e *echo.Echo) error {
 	routers := []router{
-		rtr.Post,
+		post.Router,
 	}
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())

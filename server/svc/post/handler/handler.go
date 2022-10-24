@@ -1,4 +1,4 @@
-package router
+package handler
 
 import (
 	"fmt"
@@ -7,14 +7,13 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func Post(e *echo.Group) error {
-	g := e.Group("/posts")
+type post struct{}
 
-	g.GET("/:id", getPost)
-	return nil
+func Init() (post, error) {
+	return post{}, nil
 }
 
-func getPost(c echo.Context) error {
+func (p post) GetPost(c echo.Context) error {
 	id := c.Param("id")
 	title := fmt.Sprintf("title %s", id)
 
