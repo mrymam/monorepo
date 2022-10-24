@@ -1,10 +1,13 @@
 package runner
 
-import "github.com/labstack/echo/v4"
+import (
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
+)
 
 type router func(e *echo.Echo) error
 
-func newRouter(e *echo.Echo) error {
+func NewRouter(e *echo.Echo) error {
 	routers := []router{}
 
 	for _, r := range routers {
@@ -13,6 +16,10 @@ func newRouter(e *echo.Echo) error {
 			return err
 		}
 	}
+
+	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
+	e.Logger.Fatal(e.Start(":1323"))
 
 	return nil
 }

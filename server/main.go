@@ -1,23 +1,17 @@
 package main
 
 import (
-	"net/http"
+	"fmt"
 
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
+	"github.com/onyanko-pon/monorepo/server/runner"
 )
 
 func main() {
 	e := echo.New()
-
-	e.Use(middleware.Logger())
-	e.Use(middleware.Recover())
-
-	e.GET("/", hello)
-
-	e.Logger.Fatal(e.Start(":1323"))
-}
-
-func hello(c echo.Context) error {
-	return c.String(http.StatusOK, "Hello, World!")
+	err := runner.NewRouter(e)
+	if err != nil {
+		msg := fmt.Sprintf("build error: %s", err.Error())
+		panic(msg)
+	}
 }
