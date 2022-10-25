@@ -1,23 +1,39 @@
 package repository
 
 import (
+	"github.com/onyanko-pon/monorepo/server/pkg/rds"
 	"github.com/onyanko-pon/monorepo/server/svc/post/domain/model/post"
+	"github.com/onyanko-pon/monorepo/server/svc/post/infra/entity"
+	"gorm.io/gorm"
 )
 
 type Post interface {
 	Get(id post.ID) (post.Post, error)
 }
 
-type PostImple struct{}
+type PostImple struct {
+	db *gorm.DB
+}
 
 func InitPost() (Post, error) {
-	return PostImple{}, nil
+	db, err := rds.New(rds.Config{
+		DBMS: "sqlite",
+		Conn: rds.SqliteConn{
+			Filepath: "",
+		},
+	})
+	if err != nil {
+		return PostImple{}, err
+	}
+	return PostImple{db}, nil
 }
 
 func (p PostImple) Get(id post.ID) (post.Post, error) {
-	pst, err := post.Init("title")
+
+	e := entity.Post{}
+	err := p.db.First(&e, "id = ?", id).Error
 	if err != nil {
 		return post.Post{}, err
 	}
-	return pst, nil
+	return e.ToModel(), nil
 }

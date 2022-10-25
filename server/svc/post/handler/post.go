@@ -30,7 +30,7 @@ func (h PostHander) Get(c echo.Context) error {
 	id := c.Param("id")
 	p, err := h.repo.Get(post.ID(id))
 	if err != nil {
-		return err
+		return c.JSON(http.StatusNotFound, map[string]string{"message": err.Error()})
 	}
 	pst, err := resolvePost(p)
 	if err != nil {

@@ -1,4 +1,4 @@
-package rdb
+package rds
 
 import (
 	"gorm.io/driver/sqlite"
@@ -6,9 +6,9 @@ import (
 )
 
 type SqliteConn struct {
-	filepath string
+	Filepath string
 }
 
 func (c SqliteConn) Dialector() (gorm.Dialector, error) {
-	return sqlite.Open(c.filepath), nil
+	return sqlite.Open(c.Filepath), nil
 }
