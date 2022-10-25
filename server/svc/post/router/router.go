@@ -7,11 +7,10 @@ import (
 
 func Router(e *echo.Group) error {
 	g := e.Group("/posts")
-
 	p, err := post.Init()
 	if err != nil {
 		return err
 	}
-	g.GET("/:id", p.GetPost)
+	g.GET("/:id", p.Get)
 	return nil
 }
