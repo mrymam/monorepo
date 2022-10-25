@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/onyanko-pon/monorepo/server/pkg/rds"
+	"github.com/onyanko-pon/monorepo/server/svc/post/di"
 	"github.com/onyanko-pon/monorepo/server/svc/post/domain/model/post"
 	"github.com/onyanko-pon/monorepo/server/svc/post/infra/entity"
 	"gorm.io/gorm"
@@ -16,12 +16,7 @@ type PostImple struct {
 }
 
 func InitPost() (Post, error) {
-	db, err := rds.New(rds.Config{
-		DBMS: "sqlite",
-		Conn: rds.SqliteConn{
-			Filepath: "",
-		},
-	})
+	db, err := di.GetDB()
 	if err != nil {
 		return PostImple{}, err
 	}
