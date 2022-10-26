@@ -1,0 +1,37 @@
+# this action needs Configure AWS credentials
+
+inputs:
+  image_url:
+    description: "image url which you push to"
+    required: true
+  dockerfile_path:
+    description: "path to dockerfile"
+    required: true
+  build_path:
+    description: "build root"
+    required: true
+outputs:
+  image:
+    description: "pushed image name"
+    value: ${{ steps.push-image.outputs.image }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Build
+      env:
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        docker build -t ${{ inputs.image_url }}:$IMAGE_TAG -t  ${{ inputs.image_url }}:latest -f ${{ inputs.dockerfile_path }} ${{ inputs.build_path }}
+      shell: bash
+
+    - name: push image
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: ${{ inputs.ecr_repository }}
+        IMAGE_TAG: ${{ github.sha }}
+      id: push-image
+      run: |
+        docker push ${{ inputs.image_url }}:$IMAGE_TAG
+        echo "::set-output name=image::${{ inputs.image_url }}:$IMAGE_TAG"
+      shell: bash

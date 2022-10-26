@@ -1,0 +1,19 @@
+inputs:
+  service_name:
+    description: "service name"
+    required: true
+  project:
+    description: "project"
+    required: true
+  region:
+    description: "region"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Update Cloud Run
+      run: |
+        gcloud run services update ${{ inputs.service_name }} \
+          --project=${{ inputs.project }} \
+          --region={{ inputs.region }}
+      shell: bash
