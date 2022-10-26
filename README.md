@@ -1,5 +1,17 @@
 # monorepo
 
+
+## terraform
+
+in terraform directory
+
+```bash
+terraform apply 
+```
+
+### gcr repository
+
+create GCR repository before terraform apply cloudrun resource
 ```bash
 export PROJECT_ID=monorepo
 gcloud auth login
