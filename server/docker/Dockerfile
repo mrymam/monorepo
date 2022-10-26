@@ -18,4 +18,7 @@ RUN tar -C /usr/local/bin -xzf /tmp/litestream.tar.gz
 RUN apt update
 RUN apt install -y sqlite3
 
+ENV SQLITE_FILEPATH /server/sqlite/prod.sqlite3
+ENV ENV prod
+
 EXPOSE 9000
