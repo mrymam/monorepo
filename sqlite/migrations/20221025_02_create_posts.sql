@@ -1,5 +1,5 @@
 
-create table posts (
+create table IF NOT EXISTS posts (
   id VARCHAR(255) PRIMARY KEY,
   title VARCHAR(255),
   user_id VARCHAR(255),
