@@ -1,0 +1,4 @@
+dbs:
+  - path: /server/sqlite/prod.sqlite3
+    replicas:
+      - url: gcs://bucket_name/db/prod.sqlite3
