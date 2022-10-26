@@ -1,7 +1,6 @@
 locals {
   vars = yamldecode(file("../../setting.yaml"))
-  tf = local.vars["terraform"]
 
-  project _id = local.tf["project_id"]
-  region      = local.tf["region"]
+  project_id = local.vars["project_id"]
+  region     = local.vars["region"]
 }

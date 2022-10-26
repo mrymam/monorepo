@@ -4,7 +4,11 @@ resource "google_cloud_run_service" "default" {
   template {
     spec {
       containers {
-        image = "asia.gcr.io/${local.project_id}/prod-server"
+        image = "asia.gcr.io/${local.project_id}/prod-server:latest"
+        ports {
+          container_port = 9000
+        }
+        # command = ["bash", "/etc/entrypoint.sh"]
       }
     }
   }
