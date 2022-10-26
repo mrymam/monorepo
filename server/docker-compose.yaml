@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  server:
+    container_name: monorepo-server
+    build:
+      context: .
+      dockerfile: docker/dev.Dockerfile
+    env_file:
+      - .env
+    environment:
+      - GO_ENV
+    volumes:
+      - .:/go/src/server
+      - ../sqlite/dev.sqlite3:/go/src/sqlite/sqlite3
+    command: go run .
