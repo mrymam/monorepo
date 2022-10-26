@@ -25,12 +25,12 @@ jobs:
       id: build_push
       uses: ./.github/actions/build_push_image
       with:
-        image_url: gcr.io/project_id/image_name
+        image_url: gcr.io/${{ secrets.PROJECT_ID }}/prod-server
         dockerfile_path: ./server/docker/Dockerfile
         build_path: .
-    - name: update cloud run job of weekly
+    - name: update cloud run
       uses: ./.github/actions/update_cloudrun
       with:
-        service_name: monorepo-server
-        project: monorepo
+        service_name: prod-server
+        project: ${{ secrets.PROJECT_ID }}
         region: asia-northeast1
