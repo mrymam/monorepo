@@ -18,7 +18,7 @@ func (a Authn) Verify(arg string) (string, error) {
 	// TODO: implement jwt verify
 	res := svcrouter.UserVerifyRes{
 		UserID:   "xxxxx.xxxxx",
-		Verified: true,
+		Verified: false,
 	}
 	j, err := json.Marshal(res)
 	return string(j), err
