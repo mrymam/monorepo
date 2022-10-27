@@ -42,6 +42,29 @@ func (h PostHander) Get(c echo.Context) error {
 	return c.JSON(http.StatusOK, res)
 }
 
+type GetPostsRes struct {
+	Posts []Post `json:"posts"`
+}
+
+func (h PostHander) GetAll(c echo.Context) error {
+	ms, err := h.repo.GetAll()
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
+	}
+	ps := []Post{}
+	for _, m := range ms {
+		p, err := resolvePost(m)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
+		}
+		ps = append(ps, p)
+	}
+	res := GetPostsRes{
+		Posts: ps,
+	}
+	return c.JSON(http.StatusOK, res)
+}
+
 type CreatePostReq struct {
 	Post Post `json:"post"`
 }

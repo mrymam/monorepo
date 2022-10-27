@@ -9,6 +9,8 @@ import (
 
 type Post interface {
 	Get(id post.ID) (post.Post, error)
+	GetAll() ([]post.Post, error)
+	Create(p post.Post) (post.Post, error)
 }
 
 type PostImple struct {
@@ -31,6 +33,19 @@ func (r PostImple) Get(id post.ID) (post.Post, error) {
 		return post.Post{}, err
 	}
 	return e.ToModel(), nil
+}
+
+func (r PostImple) GetAll() ([]post.Post, error) {
+	es := []entity.Post{}
+	err := r.db.Find(&es).Error
+	if err != nil {
+		return []post.Post{}, err
+	}
+	ms := []post.Post{}
+	for _, e := range es {
+		ms = append(ms, e.ToModel())
+	}
+	return ms, nil
 }
 
 func (r PostImple) Create(p post.Post) (post.Post, error) {

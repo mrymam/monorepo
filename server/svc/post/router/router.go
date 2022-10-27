@@ -12,6 +12,7 @@ func Router(e *echo.Group) error {
 		return err
 	}
 	g.GET("/:id", p.Get)
+	g.GET("", p.GetAll)
 	g.POST("", p.Create)
 	return nil
 }
