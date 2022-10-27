@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
+	"github.com/onyanko-pon/monorepo/server/pkg/http/response"
 	"github.com/onyanko-pon/monorepo/server/svc/post/domain/model/post"
 	"github.com/onyanko-pon/monorepo/server/svc/post/infra/repository"
 )
@@ -30,7 +31,8 @@ func (h PostHander) Get(c echo.Context) error {
 	id := c.Param("id")
 	p, err := h.repo.Get(post.ID(id))
 	if err != nil {
-		return c.JSON(http.StatusNotFound, map[string]string{"message": err.Error()})
+		res := response.NewErrorRes(err)
+		return c.JSON(http.StatusNotFound, res)
 	}
 	pst, err := resolvePost(p)
 	if err != nil {
@@ -49,13 +51,15 @@ type GetPostsRes struct {
 func (h PostHander) GetAll(c echo.Context) error {
 	ms, err := h.repo.GetAll()
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
+		res := response.NewErrorRes(err)
+		return c.JSON(http.StatusInternalServerError, res)
 	}
 	ps := []Post{}
 	for _, m := range ms {
 		p, err := resolvePost(m)
 		if err != nil {
-			return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
+			res := response.NewErrorRes(err)
+			return c.JSON(http.StatusInternalServerError, res)
 		}
 		ps = append(ps, p)
 	}
@@ -77,15 +81,18 @@ func (h PostHander) Create(c echo.Context) error {
 	var rq CreatePostReq
 	err := c.Bind(&rq)
 	if err != nil {
-		return c.JSON(http.StatusNotFound, map[string]string{"message": "bad request."})
+		res := response.NewErrorRes(err)
+		return c.JSON(http.StatusNotFound, res)
 	}
 	p, err := rq.Post.ToModel()
 	if err != nil {
-		return c.JSON(http.StatusNotFound, map[string]string{"message": "bad request."})
+		res := response.NewErrorRes(err)
+		return c.JSON(http.StatusNotFound, res)
 	}
 
 	if err != nil {
-		return c.JSON(http.StatusNotFound, map[string]string{"message": err.Error()})
+		res := response.NewErrorRes(err)
+		return c.JSON(http.StatusNotFound, res)
 	}
 	pst, err := resolvePost(p)
 	if err != nil {
