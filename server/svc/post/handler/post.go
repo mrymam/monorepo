@@ -90,6 +90,7 @@ func (h PostHander) Create(c echo.Context) error {
 		return c.JSON(http.StatusNotFound, res)
 	}
 
+	p, err = h.repo.Create(p)
 	if err != nil {
 		res := response.NewErrorRes(err)
 		return c.JSON(http.StatusNotFound, res)

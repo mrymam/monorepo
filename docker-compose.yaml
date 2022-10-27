@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  server:
+    container_name: monorepo-server
+    build:
+      context: server
+      dockerfile: ./docker/dev.Dockerfile
+    env_file:
+      - ./server/.env
+    ports:
+      - 9000:9000
+    volumes:
+      - ./server:/go/src/server
+      - ./sqlite:/go/src/sqlite
+    command: go run .
