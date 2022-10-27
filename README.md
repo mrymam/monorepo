@@ -13,7 +13,7 @@ terraform apply
 
 create GCR repository before terraform apply cloudrun resource
 ```bash
-export PROJECT_ID=monorepo
+export PROJECT_ID=<project_id>
 gcloud auth login
 gcloud auth configure-docker
 docker build -f server/docker/Dockerfile -t asia.gcr.io/$PROJECT_ID/prod-server:latest .

@@ -23,7 +23,7 @@ func NewRouter(e *echo.Echo) error {
 		}
 	}
 
-	e.Logger.Fatal(e.Start(":9000"))
+	e.Logger.Fatal(e.Start("0.0.0.0:9000"))
 
 	return nil
 }

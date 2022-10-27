@@ -9,6 +9,8 @@ services:
       - .env
     environment:
       - GO_ENV
+    ports:
+      - 9000:9000
     volumes:
       - .:/go/src/server
       - ../sqlite/dev.sqlite3:/go/src/sqlite/sqlite3
