@@ -51,12 +51,12 @@ type CreatePostRes struct {
 }
 
 func (h PostHander) Create(c echo.Context) error {
-	var rp Post
-	err := c.Bind(&rp)
+	var rq CreatePostReq
+	err := c.Bind(&rq)
 	if err != nil {
 		return c.JSON(http.StatusNotFound, map[string]string{"message": "bad request."})
 	}
-	p, err := rp.ToModel()
+	p, err := rq.Post.ToModel()
 	if err != nil {
 		return c.JSON(http.StatusNotFound, map[string]string{"message": "bad request."})
 	}
