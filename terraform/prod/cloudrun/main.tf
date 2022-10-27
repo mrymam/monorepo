@@ -8,7 +8,6 @@ resource "google_cloud_run_service" "default" {
         ports {
           container_port = 9000
         }
-        # command = ["bash", "/etc/entrypoint.sh"]
       }
     }
   }
