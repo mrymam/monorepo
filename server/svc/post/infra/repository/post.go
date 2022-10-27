@@ -23,10 +23,19 @@ func InitPost() (Post, error) {
 	return PostImple{db}, nil
 }
 
-func (p PostImple) Get(id post.ID) (post.Post, error) {
+func (r PostImple) Get(id post.ID) (post.Post, error) {
 
 	e := entity.Post{}
-	err := p.db.First(&e, "id = ?", id).Error
+	err := r.db.First(&e, "id = ?", id).Error
+	if err != nil {
+		return post.Post{}, err
+	}
+	return e.ToModel(), nil
+}
+
+func (r PostImple) Create(p post.Post) (post.Post, error) {
+	e := entity.ToPostEntity(p)
+	err := r.db.Create(&e).Error
 	if err != nil {
 		return post.Post{}, err
 	}

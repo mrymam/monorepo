@@ -13,3 +13,7 @@ func resolvePost(p post.Post) (Post, error) {
 		Title: string(p.Title),
 	}, nil
 }
+
+func (p Post) ToModel() (post.Post, error) {
+	return post.Init(post.Title(p.Title))
+}

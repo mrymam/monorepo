@@ -14,6 +14,13 @@ func (p Post) ToModel() post.Post {
 	}
 }
 
+func ToPostEntity(m post.Post) Post {
+	return Post{
+		ID:    string(m.ID),
+		Title: string(m.Title),
+	}
+}
+
 func (p Post) TableName() string {
 	return "posts"
 }
