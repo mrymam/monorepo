@@ -5,5 +5,6 @@ type UserVerifyReq struct {
 }
 
 type UserVerifyRes struct {
-	UserID string `json:"user_id"`
+	UserID   string `json:"user_id"`
+	Verified bool   `json:"verified"`
 }
