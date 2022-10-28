@@ -9,6 +9,5 @@ import (
 )
 
 func GetTokenSvc() (svc.TokenSvc, error) {
-
 	return svcImple.InitJwtSvc(setting.Get().JWT.SecretKey, time.Hour*24*30)
 }
