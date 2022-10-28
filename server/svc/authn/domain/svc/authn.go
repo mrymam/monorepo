@@ -5,7 +5,7 @@ import (
 )
 
 type TokenSvc interface {
-	Verify(tkn string) (Payload, error)
+	Parse(tkn string) (Payload, error)
 	Encode(Payload) (string, error)
 }
 

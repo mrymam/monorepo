@@ -15,6 +15,13 @@ type JwtSvcImple struct {
 	validPeriod time.Duration
 }
 
+func InitJwtSvc(secretKey string, validPeriod time.Duration) (JwtSvcImple, error) {
+	return JwtSvcImple{
+		secretKey:   secretKey,
+		validPeriod: validPeriod,
+	}, nil
+}
+
 func (v JwtSvcImple) Parse(tokenStr string) (svc.Payload, error) {
 	token, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {

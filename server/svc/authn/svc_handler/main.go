@@ -18,7 +18,7 @@ func (a Authn) Verify(arg string) (string, error) {
 		return "", err
 	}
 
-	payload, err := a.tokenSvc.Verify(req.Token)
+	payload, err := a.tokenSvc.Parse(req.Token)
 	rs := svcrouter.UserVerifyRes{
 		UserID:   string(payload.UserID),
 		Verified: err == nil,
