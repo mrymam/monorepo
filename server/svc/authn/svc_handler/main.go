@@ -16,10 +16,10 @@ func (a Authn) Verify(arg string) (string, error) {
 	}
 
 	// TODO: implement jwt verify
-	res := svcrouter.UserVerifyRes{
+	rs := svcrouter.UserVerifyRes{
 		UserID:   "xxxxx.xxxxx",
 		Verified: false,
 	}
-	j, err := json.Marshal(res)
+	j, err := json.Marshal(rs)
 	return string(j), err
 }
