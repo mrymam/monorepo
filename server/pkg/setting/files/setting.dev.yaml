@@ -1,2 +1,5 @@
 sqlite:
   filepath: "${SQLITE_FILEPATH}"
+
+jwt:
+  secret_key: "secret"
