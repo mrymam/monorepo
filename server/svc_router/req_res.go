@@ -16,3 +16,14 @@ type TokenEncodeReq struct {
 type TokenEncodeRes struct {
 	Token string `json:"token"`
 }
+
+type TwitterOAuth1GetAccessTokenReq struct {
+	OAuthToken    string `json:"oauth_token"`
+	OAuthSecret   string `json:"oauth_secret"`
+	OAuthVerifier string `json:"oauth_verifier"`
+}
+
+type TwitterOAuth1GetAccessTokenRes struct {
+	AccessToken  string `json:"access_token"`
+	AccessSecret string `json:"access_secret"`
+}

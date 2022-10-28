@@ -25,9 +25,9 @@ func InitTwitterAuth1Svc() (TwitterAuth1Svc, error) {
 	}, nil
 }
 
-func (s TwitterAuth1Svc) FetchAccessToken(oauthToken svc.OAuthToken, oauthSecret svc.OAuthSecret, oauthVerifier svc.OAuthVerifier) (string, string, error) {
+func (s TwitterAuth1Svc) FetchAccessToken(oauthToken svc.OAuthToken, oauthSecret svc.OAuthSecret, oauthVerifier svc.OAuthVerifier) (svc.AccessToken, svc.AccessSecret, error) {
 	accessToken, accessSecret, err := s.cfg.AccessToken(string(oauthToken), string(oauthSecret), string(oauthVerifier))
-	return accessToken, accessSecret, err
+	return svc.AccessToken(accessToken), svc.AccessSecret(accessSecret), err
 }
 
 func (s TwitterAuth1Svc) VerifyUser(accessToken svc.AccessToken, accessSecret svc.AccessSecret) (string, error) {
