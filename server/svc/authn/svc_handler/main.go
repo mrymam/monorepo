@@ -3,10 +3,13 @@ package svchandler
 import (
 	"encoding/json"
 
+	"github.com/onyanko-pon/monorepo/server/svc/authn/domain/svc"
 	svcrouter "github.com/onyanko-pon/monorepo/server/svc_router"
 )
 
-type Authn struct{}
+type Authn struct {
+	tokenSvc svc.TokenSvc
+}
 
 func (a Authn) Verify(arg string) (string, error) {
 	var req svcrouter.UserVerifyReq
@@ -15,10 +18,10 @@ func (a Authn) Verify(arg string) (string, error) {
 		return "", err
 	}
 
-	// TODO: implement jwt verify
+	payload, err := a.tokenSvc.Verify(req.Token)
 	rs := svcrouter.UserVerifyRes{
-		UserID:   "xxxxx.xxxxx",
-		Verified: false,
+		UserID:   string(payload.UserID),
+		Verified: err == nil,
 	}
 	j, err := json.Marshal(rs)
 	return string(j), err
