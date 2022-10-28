@@ -24,7 +24,12 @@ type AccessToken struct {
 
 type TwitterOAuth0Impl struct{}
 
-type User struct{}
+type User struct {
+	ID              string
+	Name            string
+	ProfileImageURL string
+	ScreenName      string
+}
 
 func (o TwitterOAuth0Impl) FetchAccessToken(t OAuthToken) (AccessToken, error) {
 	q := svcrouter.TwitterOAuth1GetAccessTokenReq{
@@ -50,6 +55,34 @@ func (o TwitterOAuth0Impl) FetchAccessToken(t OAuthToken) (AccessToken, error) {
 	return AccessToken{
 		Token:  rs.AccessToken,
 		Secret: rs.AccessSecret,
+	}, nil
+
+}
+
+func (o TwitterOAuth0Impl) VerifyAccessToken(t AccessToken) (User, error) {
+	q := svcrouter.TwitterOAuth1VerifyAccessTokenReq{
+		AccessToken:  t.Token,
+		AccessSecret: t.Secret,
+	}
+	j, err := json.Marshal(q)
+	if err != nil {
+		return User{}, err
+	}
+	r, err := svcrouter.Handle(svcrouter.TwitterOAuth1VerifyAccessToken, string(j))
+	if err != nil {
+		return User{}, err
+	}
+
+	var rs svcrouter.TwitterOAuth1VerifyAccessTokenRes
+	err = json.Unmarshal([]byte(r), &rs)
+	if err != nil {
+		return User{}, err
+	}
+	return User{
+		ID:              rs.User.ID,
+		Name:            rs.User.Name,
+		ScreenName:      rs.User.ScreenName,
+		ProfileImageURL: rs.User.ProfileImageUrl,
 	}, nil
 
 }
