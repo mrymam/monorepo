@@ -14,8 +14,8 @@ func VerifyMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 		if err != nil {
 			return echo.NewHTTPError(http.StatusUnauthorized)
 		}
-		clt := authn.AuthnImpl{}
-		rs, err := clt.Verify(token)
+		clt := authn.TokenImple{}
+		rs, err := clt.VerifyToken(token)
 
 		if err != nil || !rs.Verified {
 			return echo.NewHTTPError(http.StatusUnauthorized)
