@@ -1,6 +1,6 @@
 package twitter
 
-import "github.com/onyanko-pon/monorepo/server/svc/authn/domain/model"
+import "github.com/onyanko-pon/monorepo/server/svc/authz/domain/model"
 
 type User struct {
 	ID              string `json:"id"`

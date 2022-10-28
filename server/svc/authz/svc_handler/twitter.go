@@ -3,9 +3,9 @@ package svchandler
 import (
 	"encoding/json"
 
-	"github.com/onyanko-pon/monorepo/server/svc/authn/domain/svc"
-	"github.com/onyanko-pon/monorepo/server/svc/authn/infra/twitter"
-	svcimpl "github.com/onyanko-pon/monorepo/server/svc/authn/svc"
+	"github.com/onyanko-pon/monorepo/server/svc/authz/domain/svc"
+	"github.com/onyanko-pon/monorepo/server/svc/authz/infra/twitter"
+	svcimpl "github.com/onyanko-pon/monorepo/server/svc/authz/svc"
 	svcrouter "github.com/onyanko-pon/monorepo/server/svc_router"
 )
 

@@ -9,6 +9,7 @@ require (
 	github.com/google/uuid v1.3.0
 	github.com/labstack/echo/v4 v4.9.1
 	github.com/pkg/errors v0.9.1
+	github.com/slack-go/slack v0.11.3
 	gopkg.in/yaml.v2 v2.4.0
 	gorm.io/driver/sqlite v1.4.3
 	gorm.io/gorm v1.24.0
@@ -17,6 +18,7 @@ require (
 require (
 	github.com/Masterminds/goutils v1.1.1 // indirect
 	github.com/Masterminds/semver v1.5.0 // indirect
+	github.com/gorilla/websocket v1.4.2 // indirect
 	github.com/huandu/xstrings v1.3.2 // indirect
 	github.com/imdario/mergo v0.3.13 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
