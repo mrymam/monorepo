@@ -17,7 +17,7 @@ type VerifyRes struct {
 }
 
 func (a AuthnImpl) Verify(token string) (VerifyRes, error) {
-	vrq := svcrouter.UserVerifyReq{
+	vrq := svcrouter.TokenVerifyReq{
 		Token: token,
 	}
 	j, err := json.Marshal(vrq)
@@ -28,7 +28,7 @@ func (a AuthnImpl) Verify(token string) (VerifyRes, error) {
 	if err != nil {
 		return VerifyRes{}, err
 	}
-	var rs svcrouter.UserVerifyRes
+	var rs svcrouter.TokenVerifyRes
 	err = json.Unmarshal([]byte(vrs), &rs)
 	if err != nil {
 		return VerifyRes{}, err

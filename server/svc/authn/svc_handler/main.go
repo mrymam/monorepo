@@ -23,14 +23,14 @@ type Authn struct {
 }
 
 func (a Authn) Verify(arg string) (string, error) {
-	var req svcrouter.UserVerifyReq
+	var req svcrouter.TokenVerifyReq
 	err := json.Unmarshal([]byte(arg), &req)
 	if err != nil {
 		return "", err
 	}
 
 	payload, err := a.tokenSvc.Parse(req.Token)
-	rs := svcrouter.UserVerifyRes{
+	rs := svcrouter.TokenVerifyRes{
 		UserID:   string(payload.UserID),
 		Verified: err == nil,
 	}
