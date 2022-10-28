@@ -6,7 +6,11 @@ import (
 )
 
 func SvcRouter() error {
-	authn := svchandler.Authn{}
+	authn, err := svchandler.InitAuthn()
+	if err != nil {
+		return err
+	}
+
 	if err := svcrouter.AddHandler(svcrouter.UserVerify, authn.Verify); err != nil {
 		return err
 	}

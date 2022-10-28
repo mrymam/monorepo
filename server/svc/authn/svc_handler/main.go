@@ -3,9 +3,20 @@ package svchandler
 import (
 	"encoding/json"
 
+	"github.com/onyanko-pon/monorepo/server/svc/authn/di"
 	"github.com/onyanko-pon/monorepo/server/svc/authn/domain/svc"
 	svcrouter "github.com/onyanko-pon/monorepo/server/svc_router"
 )
+
+func InitAuthn() (Authn, error) {
+	svc, err := di.GetTokenSvc()
+	if err != nil {
+		return Authn{}, nil
+	}
+	return Authn{
+		tokenSvc: svc,
+	}, nil
+}
 
 type Authn struct {
 	tokenSvc svc.TokenSvc
