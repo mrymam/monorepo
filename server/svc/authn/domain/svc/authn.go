@@ -4,8 +4,9 @@ import (
 	"github.com/onyanko-pon/monorepo/server/svc/authn/domain/model"
 )
 
-type VerifyToken interface {
-	Do(tkn string) (Payload, bool, error)
+type TokenSvc interface {
+	Verify(tkn string) (Payload, error)
+	Encode(Payload) (string, error)
 }
 
 type Payload struct {
