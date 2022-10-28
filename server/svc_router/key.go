@@ -3,5 +3,6 @@ package svcrouter
 type Key string
 
 const (
-	UserVerify Key = "user_verify"
+	UserTokenVerify Key = "user_token_verify"
+	UserTokenEncode Key = "user_token_encode"
 )

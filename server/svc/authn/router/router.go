@@ -11,7 +11,10 @@ func SvcRouter() error {
 		return err
 	}
 
-	if err := svcrouter.AddHandler(svcrouter.UserVerify, authn.Verify); err != nil {
+	if err := svcrouter.AddHandler(svcrouter.UserTokenVerify, authn.VerifyToken); err != nil {
+		return err
+	}
+	if err := svcrouter.AddHandler(svcrouter.UserTokenEncode, authn.EncodeToken); err != nil {
 		return err
 	}
 	return nil
