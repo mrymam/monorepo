@@ -5,6 +5,7 @@ import (
 
 	"github.com/dghubble/oauth1"
 	"github.com/dghubble/oauth1/twitter"
+	"github.com/onyanko-pon/monorepo/server/pkg/setting"
 	"github.com/onyanko-pon/monorepo/server/svc/authn/domain/svc"
 )
 
@@ -13,11 +14,12 @@ type TwitterAuth1Svc struct {
 }
 
 func InitTwitterAuth1Svc() (TwitterAuth1Svc, error) {
+	s := setting.Get().Twitter.OAuth1
 	return TwitterAuth1Svc{
 		cfg: oauth1.Config{
-			ConsumerKey:    "TWITTER_CONSUMER_KEY",
-			ConsumerSecret: "TWITTER_CONSUMER_SECRET",
-			CallbackURL:    "TWITTER_OAUTH_CALLBACK_URL",
+			ConsumerKey:    s.ConsumerKey,
+			ConsumerSecret: s.ConsumerSecret,
+			CallbackURL:    s.CallbackURL,
 			Endpoint:       twitter.AuthorizeEndpoint,
 		},
 	}, nil

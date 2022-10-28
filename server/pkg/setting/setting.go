@@ -1,6 +1,7 @@
 package setting
 
 type Setting struct {
-	Sqlite Sqlite `yaml:"sqlite"`
-	JWT    JWT    `yaml:"jwt"`
+	Sqlite  Sqlite  `yaml:"sqlite"`
+	JWT     JWT     `yaml:"jwt"`
+	Twitter Twitter `yaml:"twitter"`
 }
