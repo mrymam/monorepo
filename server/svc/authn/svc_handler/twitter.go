@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 
 	"github.com/onyanko-pon/monorepo/server/svc/authn/domain/svc"
+	"github.com/onyanko-pon/monorepo/server/svc/authn/infra/twitter"
 	svcimpl "github.com/onyanko-pon/monorepo/server/svc/authn/svc"
 	svcrouter "github.com/onyanko-pon/monorepo/server/svc_router"
 )
@@ -39,6 +40,33 @@ func (a TwitterAuth1) GetAccessToken(arg string) (string, error) {
 	rs := svcrouter.TwitterOAuth1GetAccessTokenRes{
 		AccessToken:  string(accessToken),
 		AccessSecret: string(accessSecret),
+	}
+	j, err := json.Marshal(rs)
+	return string(j), err
+}
+
+func (a TwitterAuth1) VerifyAccessToken(arg string) (string, error) {
+	var req svcrouter.TwitterOAuth1VerifyAccessTokenReq
+	err := json.Unmarshal([]byte(arg), &req)
+	if err != nil {
+		return "", err
+	}
+	ujson, err := a.svc.VerifyAccessToken(svc.AccessToken(req.AccessToken), svc.AccessSecret(req.AccessSecret))
+	if err != nil {
+		return "", err
+	}
+	var u twitter.User
+	if err := json.Unmarshal([]byte(ujson), &u); err != nil {
+		return "", err
+	}
+
+	rs := svcrouter.TwitterOAuth1VerifyAccessTokenRes{
+		User: svcrouter.TwitterUser{
+			ID:              u.ID,
+			Name:            u.Name,
+			ScreenName:      u.ScreenName,
+			ProfileImageUrl: u.ProfileImageUrl,
+		},
 	}
 	j, err := json.Marshal(rs)
 	return string(j), err

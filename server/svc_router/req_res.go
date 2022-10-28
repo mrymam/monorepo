@@ -27,3 +27,19 @@ type TwitterOAuth1GetAccessTokenRes struct {
 	AccessToken  string `json:"access_token"`
 	AccessSecret string `json:"access_secret"`
 }
+
+type TwitterOAuth1VerifyAccessTokenReq struct {
+	AccessToken  string `json:"access_token"`
+	AccessSecret string `json:"access_secret"`
+}
+
+type TwitterOAuth1VerifyAccessTokenRes struct {
+	User TwitterUser `json:"user"`
+}
+
+type TwitterUser struct {
+	ID              string `json:"id"`
+	Name            string `json:"name"`
+	ScreenName      string `json:"screen_name"`
+	ProfileImageUrl string `json:"profile_image_url_https"`
+}
