@@ -18,5 +18,6 @@ func (s SlackOAuth2Svc) GetAccessToken(authnCode string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+	return res.AuthedUser.ID
 	return res.AccessToken, nil
 }

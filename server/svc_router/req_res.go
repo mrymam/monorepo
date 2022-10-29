@@ -36,3 +36,11 @@ type TwitterAuthReq struct {
 type TwitterAuthRes struct {
 	UserID string `json:"user_id"`
 }
+
+type SlackAuthReq struct {
+	AccessToken string `json:"access_token"`
+}
+
+type SlackAuthRes struct {
+	UserID string `json:"user_id"`
+}
