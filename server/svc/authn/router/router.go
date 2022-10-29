@@ -17,5 +17,20 @@ func SvcRouter() error {
 	if err := svcrouter.AddHandler(svcrouter.UserTokenEncode, authn.EncodeToken); err != nil {
 		return err
 	}
+
+	slackauth, err := svchandler.InitSlackAuth()
+	if err != nil {
+		return err
+	}
+	if err := svcrouter.AddHandler(svcrouter.SlackAuth, slackauth.Authenticate); err != nil {
+		return err
+	}
+	twitterauth, err := svchandler.InitTwitterAuth()
+	if err != nil {
+		return err
+	}
+	if err := svcrouter.AddHandler(svcrouter.TwitterAuth, twitterauth.Authenticate); err != nil {
+		return err
+	}
 	return nil
 }

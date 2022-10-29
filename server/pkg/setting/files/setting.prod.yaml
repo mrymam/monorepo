@@ -9,3 +9,9 @@ twitter:
     consumer_key: "${TWITTER_OAUTH1_CONSUMER_KEY}"
     consumer_secret: "${TWITTER_OAUTH1_CONSUMER_SECRET}"
     callback_url: "${TWITTER_OAUTH1_CALLBACK_URL}"
+
+slack:
+  oauth2:
+    client_id: "${SLACK_OAUTH2_CLIENT_ID}"
+    client_secret: "${SLACK_OAUTH2_CLIENT_SECRET}"
+    redirect_url: "${SLACK_OAUTH2_REDIRECT_URL}"

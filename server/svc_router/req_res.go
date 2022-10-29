@@ -28,6 +28,14 @@ type TwitterOAuth1GetAccessTokenRes struct {
 	AccessSecret string `json:"access_secret"`
 }
 
+type SlackOAuth2GetAccessTokenReq struct {
+	OAuthCode string `json:"oauth_code"`
+}
+
+type SlackOAuth2GetAccessTokenRes struct {
+	AccessToken string `json:"access_token"`
+}
+
 type TwitterAuthReq struct {
 	AccessToken  string `json:"access_token"`
 	AccessSecret string `json:"access_secret"`

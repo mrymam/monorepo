@@ -28,8 +28,13 @@ func InitTwitterAuth() (TwitterAuth, error) {
 	}, nil
 }
 
-func (a TwitterAuth) Authenticate(accessToken string, accessSecret string) (string, error) {
-	token := oauth1.NewToken(accessToken, accessSecret)
+func (a TwitterAuth) Authenticate(arg string) (string, error) {
+	var req svcrouter.TwitterAuthReq
+	err := json.Unmarshal([]byte(arg), &req)
+	if err != nil {
+		return "", err
+	}
+	token := oauth1.NewToken(req.AccessToken, req.AccessSecret)
 	u, err := a.twrepo.Get(token)
 	if err != nil {
 		return "", err
