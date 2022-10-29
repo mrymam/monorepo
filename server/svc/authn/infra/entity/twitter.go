@@ -11,9 +11,9 @@ type TwitterUser struct {
 
 func (e TwitterUser) ToModel() model.TwitterUser {
 	return model.TwitterUser{
-		ID:              e.ID,
-		Name:            e.Name,
-		ScreenName:      e.ScreenName,
-		ProfileImageUrl: e.ProfileImageUrl,
+		ID:              model.TwitterUserID(e.ID),
+		Name:            model.TwitterUserName(e.Name),
+		ScreenName:      model.TwitterUserScreenName(e.ScreenName),
+		ProfileImageUrl: model.TwitterUserProfileImageUrl(e.ProfileImageUrl),
 	}
 }

@@ -1,6 +1,7 @@
 package model
 
+type TwitterUserID string
 type TwitterAuthUser struct {
-	TwitterUserID string
-	UserID        string
+	TwitterUserID TwitterUserID
+	UserID        UserID
 }
