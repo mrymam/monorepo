@@ -30,7 +30,7 @@ func (s TwitterAuth1Svc) FetchAccessToken(oauthToken svc.OAuthToken, oauthSecret
 	return svc.AccessToken(accessToken), svc.AccessSecret(accessSecret), err
 }
 
-func (s TwitterAuth1Svc) VerifyAccessToken(accessToken svc.AccessToken, accessSecret svc.AccessSecret) (string, error) {
+func (s TwitterAuth1Svc) VerifyUser(accessToken svc.AccessToken, accessSecret svc.AccessSecret) (string, error) {
 	token := oauth1.NewToken(string(accessToken), string(accessSecret))
 	clt := s.cfg.Client(oauth1.NoContext, token)
 

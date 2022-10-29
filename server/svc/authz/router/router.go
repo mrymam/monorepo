@@ -13,7 +13,7 @@ func SvcRouter() error {
 	if err := svcrouter.AddHandler(svcrouter.TwitterOAuth1FetchAccessToken, twauth1.GetAccessToken); err != nil {
 		return err
 	}
-	if err := svcrouter.AddHandler(svcrouter.TwitterOAuth1VerifyAccessToken, twauth1.VerifyAccessToken); err != nil {
+	if err := svcrouter.AddHandler(svcrouter.TwitterOAuth1VerifyUser, twauth1.VerifyUser); err != nil {
 		return err
 	}
 

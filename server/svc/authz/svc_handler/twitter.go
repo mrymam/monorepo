@@ -45,13 +45,13 @@ func (a TwitterAuth1) GetAccessToken(arg string) (string, error) {
 	return string(j), err
 }
 
-func (a TwitterAuth1) VerifyAccessToken(arg string) (string, error) {
-	var req svcrouter.TwitterOAuth1VerifyAccessTokenReq
+func (a TwitterAuth1) VerifyUser(arg string) (string, error) {
+	var req svcrouter.TwitterOAuth1VerifyUserReq
 	err := json.Unmarshal([]byte(arg), &req)
 	if err != nil {
 		return "", err
 	}
-	ujson, err := a.svc.VerifyAccessToken(svc.AccessToken(req.AccessToken), svc.AccessSecret(req.AccessSecret))
+	ujson, err := a.svc.VerifyUser(svc.AccessToken(req.AccessToken), svc.AccessSecret(req.AccessSecret))
 	if err != nil {
 		return "", err
 	}
@@ -60,7 +60,7 @@ func (a TwitterAuth1) VerifyAccessToken(arg string) (string, error) {
 		return "", err
 	}
 
-	rs := svcrouter.TwitterOAuth1VerifyAccessTokenRes{
+	rs := svcrouter.TwitterOAuth1VerifyUserRes{
 		User: svcrouter.TwitterUser{
 			ID:              u.ID,
 			Name:            u.Name,

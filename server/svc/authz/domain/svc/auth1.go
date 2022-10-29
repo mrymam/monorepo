@@ -9,5 +9,5 @@ type AccessSecret string
 
 type OAuth1Svc interface {
 	FetchAccessToken(OAuthToken, OAuthSecret, OAuthVerifier) (AccessToken, AccessSecret, error)
-	VerifyAccessToken(AccessToken, AccessSecret) (string, error)
+	VerifyUser(AccessToken, AccessSecret) (string, error)
 }

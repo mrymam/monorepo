@@ -58,31 +58,3 @@ func (o TwitterOAuth0Impl) FetchAccessToken(t OAuthToken) (AccessToken, error) {
 	}, nil
 
 }
-
-func (o TwitterOAuth0Impl) VerifyAccessToken(t AccessToken) (User, error) {
-	q := svcrouter.TwitterOAuth1VerifyAccessTokenReq{
-		AccessToken:  t.Token,
-		AccessSecret: t.Secret,
-	}
-	j, err := json.Marshal(q)
-	if err != nil {
-		return User{}, err
-	}
-	r, err := svcrouter.Handle(svcrouter.TwitterOAuth1VerifyAccessToken, string(j))
-	if err != nil {
-		return User{}, err
-	}
-
-	var rs svcrouter.TwitterOAuth1VerifyAccessTokenRes
-	err = json.Unmarshal([]byte(r), &rs)
-	if err != nil {
-		return User{}, err
-	}
-	return User{
-		ID:              rs.User.ID,
-		Name:            rs.User.Name,
-		ScreenName:      rs.User.ScreenName,
-		ProfileImageURL: rs.User.ProfileImageUrl,
-	}, nil
-
-}
