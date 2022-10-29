@@ -6,6 +6,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/onyanko-pon/monorepo/server/client/authn"
+	"github.com/onyanko-pon/monorepo/server/svc/user/ctx"
 )
 
 func VerifyMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
@@ -20,7 +21,11 @@ func VerifyMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 		if err != nil || !rs.Verified {
 			return echo.NewHTTPError(http.StatusUnauthorized)
 		}
-		return next(c)
+		ac := ctx.InitAuthConctext(c, rs.UserID)
+		if err != nil || !rs.Verified {
+			return echo.NewHTTPError(http.StatusInternalServerError)
+		}
+		return next(ac)
 	}
 }
 
