@@ -1,5 +1,5 @@
 
 create table IF NOT EXISTS twitter_auth_users (
-  id VARCHAR(255) PRIMARY KEY,
+  twitter_user_id VARCHAR(255) UNIQUE,
   user_id VARCHAR(255)
 );
