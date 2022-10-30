@@ -1,10 +1,10 @@
 package repository
 
 import (
-	"github.com/onyanko-pon/monorepo/server/svc/user/di"
-	"github.com/onyanko-pon/monorepo/server/svc/user/domain/model/profile"
-	"github.com/onyanko-pon/monorepo/server/svc/user/domain/model/user"
-	"github.com/onyanko-pon/monorepo/server/svc/user/infra/entity"
+	"github.com/onyanko-pon/monorepo/server/svc/account/di"
+	"github.com/onyanko-pon/monorepo/server/svc/account/domain/model/profile"
+	"github.com/onyanko-pon/monorepo/server/svc/account/domain/model/user"
+	"github.com/onyanko-pon/monorepo/server/svc/account/infra/entity"
 	"gorm.io/gorm"
 )
 

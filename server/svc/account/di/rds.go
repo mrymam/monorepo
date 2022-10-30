@@ -5,7 +5,7 @@ import (
 
 	"github.com/onyanko-pon/monorepo/server/pkg/env"
 	"github.com/onyanko-pon/monorepo/server/pkg/rds"
-	"github.com/onyanko-pon/monorepo/server/svc/user/config"
+	"github.com/onyanko-pon/monorepo/server/svc/account/config"
 	"gorm.io/gorm"
 )
 

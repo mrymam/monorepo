@@ -6,7 +6,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/onyanko-pon/monorepo/server/client/authn"
-	"github.com/onyanko-pon/monorepo/server/svc/user/ctx"
+	"github.com/onyanko-pon/monorepo/server/svc/account/ctx"
 )
 
 func VerifyMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
