@@ -12,6 +12,7 @@ type Profile interface {
 	GetByUserID(id user.ID) (profile.Profile, error)
 	GetAll() ([]profile.Profile, error)
 	Create(user.ID, profile.Profile) (profile.Profile, error)
+	Exist(uid user.ID) (bool, error)
 }
 
 type ProfileImple struct {
@@ -56,4 +57,14 @@ func (r ProfileImple) Create(uid user.ID, p profile.Profile) (profile.Profile, e
 		return profile.Profile{}, err
 	}
 	return e.ToModel(), nil
+}
+
+func (r ProfileImple) Exist(uid user.ID) (bool, error) {
+	var c int64
+	var e entity.Profile
+	err := r.db.First(&e, "user_id = ?", uid).Count(&c).Error
+	if err != nil {
+		return false, err
+	}
+	return c > 0, nil
 }

@@ -74,17 +74,17 @@ func (h AccountHander) GetAll(c echo.Context) error {
 	return c.JSON(http.StatusOK, res)
 }
 
-type CreateProfileReq struct {
+type TwitterSigninReq struct {
 	AccessToken  string `json:"access_token"`
 	AccessSecret string `json:"access_secret"`
 }
 
-type CreateProfileRes struct {
+type TwitterSigninRes struct {
 	Profile Profile `json:"profile"`
 }
 
 func (h AccountHander) TwitteSignin(c echo.Context) error {
-	var rq CreateProfileReq
+	var rq TwitterSigninReq
 	err := c.Bind(&rq)
 	if err != nil {
 		res := response.NewErrorRes(err)
@@ -97,23 +97,37 @@ func (h AccountHander) TwitteSignin(c echo.Context) error {
 	}
 
 	var p profile.Profile
+	uid := user.ID(ars.UserID)
 
-	p, err = profile.Init(profile.Name(ars.TwitterProfile.ScreenName))
+	ex, err := h.prepo.Exist(uid)
 	if err != nil {
-		res := response.NewErrorRes(err)
-		return c.JSON(http.StatusInternalServerError, res)
+		r := response.NewErrorRes(err)
+		return c.JSON(http.StatusBadRequest, r)
 	}
-	p, err = h.prepo.Create(user.ID(ars.UserID), p)
-	if err != nil {
-		res := response.NewErrorRes(err)
-		return c.JSON(http.StatusNotFound, res)
+	if ex {
+		p, err = h.prepo.GetByUserID(uid)
+		if err != nil {
+			r := response.NewErrorRes(err)
+			return c.JSON(http.StatusBadRequest, r)
+		}
+	} else {
+		p, err = profile.Init(profile.Name(ars.TwitterProfile.ScreenName))
+		if err != nil {
+			res := response.NewErrorRes(err)
+			return c.JSON(http.StatusInternalServerError, res)
+		}
+		p, err = h.prepo.Create(uid, p)
+		if err != nil {
+			res := response.NewErrorRes(err)
+			return c.JSON(http.StatusNotFound, res)
+		}
 	}
 
 	pst, err := resolveProfile(p)
 	if err != nil {
 		return err
 	}
-	res := CreateUserRes{
+	res := TwitterSigninRes{
 		Profile: pst,
 	}
 	return c.JSON(http.StatusOK, res)

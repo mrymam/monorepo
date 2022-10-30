@@ -14,6 +14,6 @@ func Router(e *echo.Group) error {
 	}
 	g.GET("/profile", u.Get, middleware.VerifyMiddleware)
 	g.GET("", u.GetAll)
-	g.GET("/twitter_signin", u.TwitteSignin)
+	g.POST("/twitter_signin", u.TwitteSignin)
 	return nil
 }
