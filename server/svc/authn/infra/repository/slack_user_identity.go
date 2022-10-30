@@ -7,20 +7,20 @@ import (
 	"gorm.io/gorm"
 )
 
-func InitSlackAuthRepo() (SlackAuthRepo, error) {
+func InitSlackUserIdentityRepo() (SlackUserIdentyRepo, error) {
 	db, err := di.GetDB()
 	if err != nil {
-		return SlackAuthRepo{}, err
+		return SlackUserIdentyRepo{}, err
 	}
-	return SlackAuthRepo{db: db}, nil
+	return SlackUserIdentyRepo{db: db}, nil
 }
 
-type SlackAuthRepo struct {
+type SlackUserIdentyRepo struct {
 	db *gorm.DB
 }
 
-func (r SlackAuthRepo) GetBySlackUserID(id model.SlackUserID) (model.SlackAuth, error) {
-	var e entity.SlackAuth
+func (r SlackUserIdentyRepo) GetBySlackUserID(id model.SlackUserID) (model.SlackUserIdentity, error) {
+	var e entity.SlackUserIdentity
 	r.db.First(&e, "slack_user_id = ?", id)
 	return e.ToModel(), nil
 }

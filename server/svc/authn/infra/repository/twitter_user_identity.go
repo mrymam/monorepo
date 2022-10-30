@@ -7,20 +7,20 @@ import (
 	"gorm.io/gorm"
 )
 
-func InitTwitterAuthRepo() (TwitterAuthRepo, error) {
+func InitTwitterUserIdentityRepo() (TwitterUserIdentityRepo, error) {
 	db, err := di.GetDB()
 	if err != nil {
-		return TwitterAuthRepo{}, err
+		return TwitterUserIdentityRepo{}, err
 	}
-	return TwitterAuthRepo{db: db}, nil
+	return TwitterUserIdentityRepo{db: db}, nil
 }
 
-type TwitterAuthRepo struct {
+type TwitterUserIdentityRepo struct {
 	db *gorm.DB
 }
 
-func (r TwitterAuthRepo) GetByTiwtterUserID(id model.TwitterUserID) (model.TwitterAuth, error) {
-	var e entity.TwitterAuth
+func (r TwitterUserIdentityRepo) GetByTiwtterUserID(id model.TwitterUserID) (model.TwitterUserIdentity, error) {
+	var e entity.TwitterUserIdentity
 	r.db.First(&e, "twitter_user_id = ?", id)
 	return e.ToModel(), nil
 }

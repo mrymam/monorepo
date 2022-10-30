@@ -10,7 +10,7 @@ import (
 
 type TwitterAuth struct {
 	twrepo   repository.TwitterUserRepo
-	authrepo repository.TwitterAuthRepo
+	authrepo repository.TwitterUserIdentityRepo
 }
 
 func InitTwitterAuth() (TwitterAuth, error) {
@@ -18,7 +18,7 @@ func InitTwitterAuth() (TwitterAuth, error) {
 	if err != nil {
 		return TwitterAuth{}, err
 	}
-	authrepo, err := repository.InitTwitterAuthRepo()
+	authrepo, err := repository.InitTwitterUserIdentityRepo()
 	if err != nil {
 		return TwitterAuth{}, err
 	}

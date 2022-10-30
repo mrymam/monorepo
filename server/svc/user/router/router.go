@@ -13,7 +13,7 @@ func Router(e *echo.Group) error {
 		return err
 	}
 	g.GET("/:id", u.Get)
-	g.GET("/profile", u.GetProfile)
+	g.GET("/profile", u.GetProfile, middleware.VerifyMiddleware)
 	g.GET("", u.GetAll)
 	g.POST("", u.Create, middleware.VerifyMiddleware)
 	return nil

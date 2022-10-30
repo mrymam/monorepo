@@ -10,11 +10,11 @@ import (
 )
 
 type SlackAuth struct {
-	authrepo repository.SlackAuthRepo
+	authrepo repository.SlackUserIdentyRepo
 }
 
 func InitSlackAuth() (SlackAuth, error) {
-	authrepo, err := repository.InitSlackAuthRepo()
+	authrepo, err := repository.InitSlackUserIdentityRepo()
 	if err != nil {
 		return SlackAuth{}, err
 	}
