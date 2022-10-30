@@ -15,3 +15,11 @@ func (e SlackUserIdentity) ToModel() model.SlackUserIdentity {
 		UserID:      model.UserID(e.UserID),
 	}
 }
+
+func ToSlackUserEntity(m model.SlackUserIdentity) SlackUserIdentity {
+	return SlackUserIdentity{
+		SlackUserID: string(m.SlackUserID),
+		SlackTeamID: string(m.SlackTeamID),
+		UserID:      string(m.UserID),
+	}
+}

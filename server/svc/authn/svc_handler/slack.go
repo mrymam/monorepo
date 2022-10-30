@@ -34,6 +34,20 @@ func (a SlackAuth) Authenticate(arg string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+	ex, err := a.authrepo.Exist(model.SlackUserID(ui.User.ID))
+	if err != nil {
+		return "", err
+	}
+	if !ex {
+		m, err := model.InitTwitterSlackIdentity(model.SlackUserID(ui.User.ID), model.SlackTeamID(ui.Team.ID))
+		if err != nil {
+			return "", err
+		}
+		_, err = a.authrepo.Create(m)
+		if err != nil {
+			return "", err
+		}
+	}
 	sa, err := a.authrepo.GetBySlackUserID(model.SlackUserID(ui.User.ID))
 	if err != nil {
 		return "", err
