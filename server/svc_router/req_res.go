@@ -42,7 +42,15 @@ type TwitterAuthReq struct {
 }
 
 type TwitterAuthRes struct {
-	UserID string `json:"user_id"`
+	UserID  string         `json:"user_id"`
+	Profile TwitterProfile `json:"profile"`
+}
+
+type TwitterProfile struct {
+	ID         string `json:"id"`
+	ScreenName string `json:"screen_name"`
+	Name       string `json:"name"`
+	ImageURL   string `json:"image_url"`
 }
 
 type SlackAuthReq struct {
@@ -50,5 +58,20 @@ type SlackAuthReq struct {
 }
 
 type SlackAuthRes struct {
-	UserID string `json:"user_id"`
+	UserID  string           `json:"user_id"`
+	Profile SlackProfile     `json:"profile"`
+	Team    SlackTeamProfile `json:"team"`
+}
+
+type SlackProfile struct {
+	ID       string `json:"id"`
+	Name     string `json:"name"`
+	ImageURL string `json:"image_url"`
+}
+
+type SlackTeamProfile struct {
+	ID       string `json:"id"`
+	Name     string `json:"name"`
+	Domain   string `json:"domain"`
+	ImageURL string `json:"image_url"`
 }

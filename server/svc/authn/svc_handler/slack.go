@@ -40,6 +40,17 @@ func (a SlackAuth) Authenticate(arg string) (string, error) {
 	}
 	res := svcrouter.SlackAuthRes{
 		UserID: string(sa.UserID),
+		Profile: svcrouter.SlackProfile{
+			ID:       ui.User.ID,
+			Name:     ui.User.Name,
+			ImageURL: ui.User.Image512,
+		},
+		Team: svcrouter.SlackTeamProfile{
+			ID:       ui.Team.ID,
+			Name:     ui.Team.Name,
+			Domain:   ui.Team.Domain,
+			ImageURL: ui.Team.Image230,
+		},
 	}
 	j, err := json.Marshal(res)
 	return string(j), err

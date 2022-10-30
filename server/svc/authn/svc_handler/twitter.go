@@ -46,6 +46,12 @@ func (a TwitterAuth) Authenticate(arg string) (string, error) {
 
 	rs := svcrouter.TwitterAuthRes{
 		UserID: string(at.TwitterUserID),
+		Profile: svcrouter.TwitterProfile{
+			ID:         string(u.ID),
+			ScreenName: string(u.Name),
+			Name:       string(u.Name),
+			ImageURL:   string(u.ProfileImageUrl),
+		},
 	}
 	j, err := json.Marshal(rs)
 	return string(j), err
