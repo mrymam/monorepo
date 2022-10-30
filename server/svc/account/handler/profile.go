@@ -4,14 +4,17 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
+	"github.com/onyanko-pon/monorepo/server/client/authn"
 	"github.com/onyanko-pon/monorepo/server/pkg/http/response"
 	"github.com/onyanko-pon/monorepo/server/svc/account/ctx"
+	"github.com/onyanko-pon/monorepo/server/svc/account/domain/model/profile"
 	"github.com/onyanko-pon/monorepo/server/svc/account/domain/model/user"
 	"github.com/onyanko-pon/monorepo/server/svc/account/infra/repository"
 )
 
 type AccountHander struct {
-	prepo repository.Profile
+	prepo   repository.Profile
+	twiauth authn.TwitterAuth
 }
 
 func Init() (AccountHander, error) {
@@ -20,7 +23,8 @@ func Init() (AccountHander, error) {
 		return AccountHander{}, err
 	}
 	return AccountHander{
-		prepo: prepo,
+		prepo:   prepo,
+		twiauth: authn.TwitterAuthImple{},
 	}, nil
 }
 
@@ -71,10 +75,11 @@ func (h AccountHander) GetAll(c echo.Context) error {
 }
 
 type CreateProfileReq struct {
-	Profile Profile `json:"profile"`
+	AccessToken  string `json:"access_token"`
+	AccessSecret string `json:"access_secret"`
 }
 
-type CreateUserRes struct {
+type CreateProfileRes struct {
 	Profile Profile `json:"profile"`
 }
 
@@ -83,19 +88,27 @@ func (h AccountHander) TwitteSignin(c echo.Context) error {
 	err := c.Bind(&rq)
 	if err != nil {
 		res := response.NewErrorRes(err)
-		return c.JSON(http.StatusNotFound, res)
+		return c.JSON(http.StatusBadRequest, res)
 	}
-	p, err := rq.Profile.ToModel()
+	ars, err := h.twiauth.Authenticate(rq.AccessToken, rq.AccessSecret)
+	if err != nil {
+		r := response.NewErrorRes(err)
+		return c.JSON(http.StatusBadRequest, r)
+	}
+
+	var p profile.Profile
+
+	p, err = profile.Init(profile.Name(ars.TwitterProfile.ScreenName))
+	if err != nil {
+		res := response.NewErrorRes(err)
+		return c.JSON(http.StatusInternalServerError, res)
+	}
+	p, err = h.prepo.Create(user.ID(ars.UserID), p)
 	if err != nil {
 		res := response.NewErrorRes(err)
 		return c.JSON(http.StatusNotFound, res)
 	}
 
-	p, err = h.prepo.Create(user.ID(userid), p)
-	if err != nil {
-		res := response.NewErrorRes(err)
-		return c.JSON(http.StatusNotFound, res)
-	}
 	pst, err := resolveProfile(p)
 	if err != nil {
 		return err
