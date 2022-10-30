@@ -21,6 +21,25 @@ type TwitterUserIdentityRepo struct {
 
 func (r TwitterUserIdentityRepo) GetByTiwtterUserID(id model.TwitterUserID) (model.TwitterUserIdentity, error) {
 	var e entity.TwitterUserIdentity
-	r.db.First(&e, "twitter_user_id = ?", id)
-	return e.ToModel(), nil
+	err := r.db.First(&e, "twitter_user_id = ?", id).Error
+	return e.ToModel(), err
+}
+
+func (r TwitterUserIdentityRepo) Exist(id model.TwitterUserID) (bool, error) {
+	var c int64
+	var e entity.TwitterUserIdentity
+	err := r.db.First(&e, "twitter_user_id = ?", id).Count(&c).Error
+	if err != nil {
+		return false, err
+	}
+	return c > 0, nil
+}
+
+func (r TwitterUserIdentityRepo) Create(m model.TwitterUserIdentity) (model.TwitterUserIdentity, error) {
+	e := entity.ToTwitterUserEntity(m)
+	err := r.db.Create(e).Error
+	if err != nil {
+		return model.TwitterUserIdentity{}, err
+	}
+	return m, nil
 }

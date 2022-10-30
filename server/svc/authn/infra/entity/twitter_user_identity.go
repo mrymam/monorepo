@@ -13,3 +13,10 @@ func (e TwitterUserIdentity) ToModel() model.TwitterUserIdentity {
 		UserID:        model.UserID(e.UserID),
 	}
 }
+
+func ToTwitterUserEntity(m model.TwitterUserIdentity) TwitterUserIdentity {
+	return TwitterUserIdentity{
+		TwitterUserID: string(m.TwitterUserID),
+		UserID:        string(m.UserID),
+	}
+}

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 
 	"github.com/dghubble/oauth1"
+	"github.com/onyanko-pon/monorepo/server/svc/authn/domain/model"
 	"github.com/onyanko-pon/monorepo/server/svc/authn/infra/repository"
 	svcrouter "github.com/onyanko-pon/monorepo/server/svc_router"
 )
@@ -38,6 +39,20 @@ func (a TwitterAuth) Authenticate(arg string) (string, error) {
 	u, err := a.twrepo.Get(token)
 	if err != nil {
 		return "", err
+	}
+	ex, err := a.authrepo.Exist(u.ID)
+	if err != nil {
+		return "", err
+	}
+	if !ex {
+		m, err := model.InitTwitterUserIdentity(u.ID)
+		if err != nil {
+			return "", err
+		}
+		_, err = a.authrepo.Create(m)
+		if err != nil {
+			return "", err
+		}
 	}
 	at, err := a.authrepo.GetByTiwtterUserID(u.ID)
 	if err != nil {
