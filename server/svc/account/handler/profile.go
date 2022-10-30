@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -13,8 +14,9 @@ import (
 )
 
 type AccountHander struct {
-	prepo   repository.Profile
-	twiauth authn.TwitterAuth
+	prepo     repository.Profile
+	twiauth   authn.TwitterAuth
+	tokenauth authn.Token
 }
 
 func Init() (AccountHander, error) {
@@ -23,8 +25,9 @@ func Init() (AccountHander, error) {
 		return AccountHander{}, err
 	}
 	return AccountHander{
-		prepo:   prepo,
-		twiauth: authn.TwitterAuthImple{},
+		prepo:     prepo,
+		twiauth:   authn.TwitterAuthImple{},
+		tokenauth: authn.TokenImple{},
 	}, nil
 }
 
@@ -122,6 +125,15 @@ func (h AccountHander) TwitteSignin(c echo.Context) error {
 			return c.JSON(http.StatusNotFound, res)
 		}
 	}
+	pld := authn.Payload{
+		UserID: string(uid),
+	}
+	token, err := h.tokenauth.EncodeToken(pld)
+	if err != nil {
+		res := response.NewErrorRes(err)
+		return c.JSON(http.StatusNotFound, res)
+	}
+	c.Response().Header().Set(echo.HeaderAuthorization, fmt.Sprintf("bearer %s", token))
 
 	pst, err := resolveProfile(p)
 	if err != nil {
