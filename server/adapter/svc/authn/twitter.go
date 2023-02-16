@@ -7,9 +7,16 @@ type TwitterProfile struct {
 	ImageURL   string `json:"image_url"`
 }
 
-type TwitterAccessToken string
-type TwitterAccessSecret string
+type TwitterAuthenticateReq struct {
+	AccessToken  string
+	AccessSecret string
+}
+
+type TwitterAuthenticateRes struct {
+	UserID  string
+	Profile TwitterProfile
+}
 
 type TwitterAuth interface {
-	Authenticate(TwitterAccessToken, TwitterAccessSecret) (UserID, TwitterProfile, error)
+	Authenticate(TwitterAuthenticateReq) (TwitterAuthenticateRes, error)
 }

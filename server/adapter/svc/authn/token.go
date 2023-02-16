@@ -1,10 +1,21 @@
 package authn
 
-type UserID string
-type Token string
-type Varid bool
+type AuthnVerifyTokenReq struct {
+	Token string
+}
+type AuthnVerifyTokenRes struct {
+	UserID string
+	Varid  bool
+}
+
+type AuthnEncodeTokenReq struct {
+	UserID string
+}
+type AuthnEncodeTokenRes struct {
+	Token string
+}
 
 type Authn interface {
-	VerifyToken(Token) (UserID, Varid, error)
-	EncodeToken(UserID) (Token, error)
+	VerifyToken(AuthnVerifyTokenReq) (AuthnVerifyTokenRes, error)
+	EncodeToken(AuthnEncodeTokenReq) (AuthnEncodeTokenRes, error)
 }

@@ -1,11 +1,5 @@
 package authn
 
-type SlackAccessToken string
-
-type SlackAuth interface {
-	Authenticate(accessToken SlackAccessToken) (UserID, SlackProfile, SlackTeamProfile, error)
-}
-
 type SlackProfile struct {
 	ID       string
 	Name     string
@@ -17,4 +11,18 @@ type SlackTeamProfile struct {
 	Name     string
 	Domain   string
 	ImageURL string
+}
+
+type SlackAuthenticateReq struct {
+	AccessToken string
+}
+
+type SlackAuthenticateRes struct {
+	UserID      string
+	Profile     SlackProfile
+	TeamProfile SlackTeamProfile
+}
+
+type SlackAuth interface {
+	Authenticate(SlackAuthenticateReq) (SlackAuthenticateRes, error)
 }
