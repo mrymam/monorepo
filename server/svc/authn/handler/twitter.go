@@ -1,12 +1,10 @@
-package svchandler
+package handler
 
 import (
-	"encoding/json"
-
 	"github.com/dghubble/oauth1"
+	adapter "github.com/onyanko-pon/monorepo/server/adapter/svc/authn"
 	"github.com/onyanko-pon/monorepo/server/svc/authn/domain/model"
 	"github.com/onyanko-pon/monorepo/server/svc/authn/infra/repository"
-	svcrouter "github.com/onyanko-pon/monorepo/server/svc_router"
 )
 
 type TwitterAuth struct {
@@ -29,45 +27,35 @@ func InitTwitterAuth() (TwitterAuth, error) {
 	}, nil
 }
 
-func (a TwitterAuth) Authenticate(arg string) (string, error) {
-	var req svcrouter.TwitterAuthReq
-	err := json.Unmarshal([]byte(arg), &req)
-	if err != nil {
-		return "", err
-	}
-	token := oauth1.NewToken(req.AccessToken, req.AccessSecret)
+func (a TwitterAuth) Authenticate(accessToken adapter.TwitterAccessToken, accessSecret adapter.TwitterAccessSecret) (adapter.UserID, adapter.TwitterProfile, error) {
+	token := oauth1.NewToken(string(accessToken), string(accessSecret))
 	u, err := a.twrepo.Get(token)
 	if err != nil {
-		return "", err
+		return "", adapter.TwitterProfile{}, err
 	}
 	ex, err := a.authrepo.Exist(u.ID)
 	if err != nil {
-		return "", err
+		return "", adapter.TwitterProfile{}, err
 	}
 	if !ex {
 		m, err := model.InitTwitterUserIdentity(u.ID)
 		if err != nil {
-			return "", err
+			return "", adapter.TwitterProfile{}, err
 		}
 		_, err = a.authrepo.Create(m)
 		if err != nil {
-			return "", err
+			return "", adapter.TwitterProfile{}, err
 		}
 	}
 	at, err := a.authrepo.GetByTiwtterUserID(u.ID)
 	if err != nil {
-		return "", err
+		return "", adapter.TwitterProfile{}, err
 	}
 
-	rs := svcrouter.TwitterAuthRes{
-		UserID: string(at.TwitterUserID),
-		Profile: svcrouter.TwitterProfile{
-			ID:         string(u.ID),
-			ScreenName: string(u.Name),
-			Name:       string(u.Name),
-			ImageURL:   string(u.ProfileImageUrl),
-		},
-	}
-	j, err := json.Marshal(rs)
-	return string(j), err
+	return adapter.UserID(at.TwitterUserID), adapter.TwitterProfile{
+		ID:         string(u.ID),
+		ScreenName: string(u.Name),
+		Name:       string(u.Name),
+		ImageURL:   string(u.ProfileImageUrl),
+	}, nil
 }
