@@ -1,9 +1,9 @@
 package repository
 
 import (
-	"github.com/onyanko-pon/monorepo/server/svc/post/di"
-	"github.com/onyanko-pon/monorepo/server/svc/post/domain/model/post"
-	"github.com/onyanko-pon/monorepo/server/svc/post/infra/entity"
+	"github.com/mrymam/monorepo/server/svc/post/di"
+	"github.com/mrymam/monorepo/server/svc/post/domain/model/post"
+	"github.com/mrymam/monorepo/server/svc/post/infra/entity"
 	"gorm.io/gorm"
 )
 

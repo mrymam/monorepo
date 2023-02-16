@@ -5,9 +5,9 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	authn "github.com/onyanko-pon/monorepo/server/adapter/svc/authn"
-	authnf "github.com/onyanko-pon/monorepo/server/adapter/svc/authn/factory"
-	"github.com/onyanko-pon/monorepo/server/svc/post/ctx"
+	authn "github.com/mrymam/monorepo/server/adapter/svc/authn"
+	authnf "github.com/mrymam/monorepo/server/adapter/svc/authn/factory"
+	"github.com/mrymam/monorepo/server/svc/post/ctx"
 )
 
 func VerifyMiddleware(next echo.HandlerFunc) echo.HandlerFunc {

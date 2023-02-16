@@ -3,9 +3,9 @@ package di
 import (
 	"fmt"
 
-	"github.com/onyanko-pon/monorepo/server/pkg/env"
-	"github.com/onyanko-pon/monorepo/server/pkg/rds"
-	"github.com/onyanko-pon/monorepo/server/svc/authn/config"
+	"github.com/mrymam/monorepo/server/pkg/env"
+	"github.com/mrymam/monorepo/server/pkg/rds"
+	"github.com/mrymam/monorepo/server/svc/authn/config"
 	"gorm.io/gorm"
 )
 

@@ -3,9 +3,9 @@ package di
 import (
 	"time"
 
-	"github.com/onyanko-pon/monorepo/server/pkg/setting"
-	"github.com/onyanko-pon/monorepo/server/svc/authn/domain/svc"
-	svcImple "github.com/onyanko-pon/monorepo/server/svc/authn/svc"
+	"github.com/mrymam/monorepo/server/pkg/setting"
+	"github.com/mrymam/monorepo/server/svc/authn/domain/svc"
+	svcImple "github.com/mrymam/monorepo/server/svc/authn/svc"
 )
 
 func GetTokenSvc() (svc.TokenSvc, error) {

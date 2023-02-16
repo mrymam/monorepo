@@ -3,7 +3,7 @@ package svc
 import (
 	"net/http"
 
-	"github.com/onyanko-pon/monorepo/server/pkg/setting"
+	"github.com/mrymam/monorepo/server/pkg/setting"
 	"github.com/slack-go/slack"
 )
 

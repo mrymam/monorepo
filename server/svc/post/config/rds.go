@@ -1,8 +1,8 @@
 package config
 
 import (
-	"github.com/onyanko-pon/monorepo/server/pkg/rds"
-	"github.com/onyanko-pon/monorepo/server/pkg/setting"
+	"github.com/mrymam/monorepo/server/pkg/rds"
+	"github.com/mrymam/monorepo/server/pkg/setting"
 )
 
 func GetRdsConfig() (rds.Config, error) {

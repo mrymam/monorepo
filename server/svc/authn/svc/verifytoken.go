@@ -5,8 +5,8 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt"
-	"github.com/onyanko-pon/monorepo/server/svc/authn/domain/model"
-	"github.com/onyanko-pon/monorepo/server/svc/authn/domain/svc"
+	"github.com/mrymam/monorepo/server/svc/authn/domain/model"
+	"github.com/mrymam/monorepo/server/svc/authn/domain/svc"
 	"github.com/pkg/errors"
 )
 

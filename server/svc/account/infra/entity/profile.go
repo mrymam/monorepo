@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"github.com/onyanko-pon/monorepo/server/svc/account/domain/model/profile"
+	"github.com/mrymam/monorepo/server/svc/account/domain/model/profile"
 )
 
 type Profile struct {

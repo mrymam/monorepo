@@ -1,6 +1,6 @@
 package entity
 
-import "github.com/onyanko-pon/monorepo/server/svc/post/domain/model/post"
+import "github.com/mrymam/monorepo/server/svc/post/domain/model/post"
 
 type Post struct {
 	ID    string `gorm:"id"`

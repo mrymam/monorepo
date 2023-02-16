@@ -1,6 +1,6 @@
 package entity
 
-import "github.com/onyanko-pon/monorepo/server/svc/authn/domain/model"
+import "github.com/mrymam/monorepo/server/svc/authn/domain/model"
 
 type SlackUserIdentity struct {
 	SlackUserID string `gorm:"slack_user_id"`

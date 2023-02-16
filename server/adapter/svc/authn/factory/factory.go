@@ -1,8 +1,8 @@
 package factory
 
 import (
-	"github.com/onyanko-pon/monorepo/server/adapter/svc/authn"
-	"github.com/onyanko-pon/monorepo/server/svc/authn/handler"
+	"github.com/mrymam/monorepo/server/adapter/svc/authn"
+	"github.com/mrymam/monorepo/server/svc/authn/handler"
 )
 
 func InitSlackAuth() (authn.SlackAuth, error) {
