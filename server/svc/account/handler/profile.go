@@ -5,7 +5,8 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"github.com/onyanko-pon/monorepo/server/client/authn"
+	"github.com/onyanko-pon/monorepo/server/adapter/svc/authn"
+	authnf "github.com/onyanko-pon/monorepo/server/adapter/svc/authn/factory"
 	"github.com/onyanko-pon/monorepo/server/pkg/http/response"
 	"github.com/onyanko-pon/monorepo/server/svc/account/ctx"
 	"github.com/onyanko-pon/monorepo/server/svc/account/domain/model/profile"
@@ -16,7 +17,7 @@ import (
 type AccountHander struct {
 	prepo     repository.Profile
 	twiauth   authn.TwitterAuth
-	tokenauth authn.Token
+	tokenauth authn.Authn
 }
 
 func Init() (AccountHander, error) {
@@ -24,10 +25,13 @@ func Init() (AccountHander, error) {
 	if err != nil {
 		return AccountHander{}, err
 	}
+	twiauth, err := authnf.InitTwitterAuth()
+	tokenauth, err := authnf.InitAuthn()
+
 	return AccountHander{
 		prepo:     prepo,
-		twiauth:   authn.TwitterAuthImple{},
-		tokenauth: authn.TokenImple{},
+		twiauth:   twiauth,
+		tokenauth: tokenauth,
 	}, nil
 }
 
@@ -93,14 +97,19 @@ func (h AccountHander) TwitteSignin(c echo.Context) error {
 		res := response.NewErrorRes(err)
 		return c.JSON(http.StatusBadRequest, res)
 	}
-	ars, err := h.twiauth.Authenticate(rq.AccessToken, rq.AccessSecret)
+
+	param := authn.TwitterAuthenticateReq{
+		AccessToken:  rq.AccessToken,
+		AccessSecret: rq.AccessSecret,
+	}
+	r, err := h.twiauth.Authenticate(param)
 	if err != nil {
 		r := response.NewErrorRes(err)
 		return c.JSON(http.StatusBadRequest, r)
 	}
 
 	var p profile.Profile
-	uid := user.ID(ars.UserID)
+	uid := user.ID(r.UserID)
 
 	ex, err := h.prepo.Exist(uid)
 	if err != nil {
@@ -114,7 +123,7 @@ func (h AccountHander) TwitteSignin(c echo.Context) error {
 			return c.JSON(http.StatusBadRequest, r)
 		}
 	} else {
-		p, err = profile.Init(profile.Name(ars.TwitterProfile.ScreenName))
+		p, err = profile.Init(profile.Name(r.Profile.ScreenName))
 		if err != nil {
 			res := response.NewErrorRes(err)
 			return c.JSON(http.StatusInternalServerError, res)
@@ -125,15 +134,15 @@ func (h AccountHander) TwitteSignin(c echo.Context) error {
 			return c.JSON(http.StatusNotFound, res)
 		}
 	}
-	pld := authn.Payload{
+	pld := authn.AuthnEncodeTokenReq{
 		UserID: string(uid),
 	}
-	token, err := h.tokenauth.EncodeToken(pld)
+	rt, err := h.tokenauth.EncodeToken(pld)
 	if err != nil {
 		res := response.NewErrorRes(err)
 		return c.JSON(http.StatusNotFound, res)
 	}
-	c.Response().Header().Set(echo.HeaderAuthorization, fmt.Sprintf("bearer %s", token))
+	c.Response().Header().Set(echo.HeaderAuthorization, fmt.Sprintf("bearer %s", rt.Token))
 
 	pst, err := resolveProfile(p)
 	if err != nil {

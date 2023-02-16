@@ -5,7 +5,8 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"github.com/onyanko-pon/monorepo/server/client/authn"
+	authn "github.com/onyanko-pon/monorepo/server/adapter/svc/authn"
+	authnf "github.com/onyanko-pon/monorepo/server/adapter/svc/authn/factory"
 	"github.com/onyanko-pon/monorepo/server/svc/post/ctx"
 )
 
@@ -15,14 +16,20 @@ func VerifyMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 		if err != nil {
 			return echo.NewHTTPError(http.StatusUnauthorized)
 		}
-		clt := authn.TokenImple{}
-		rs, err := clt.VerifyToken(token)
+		authc, err := authnf.InitAuthn()
+		if err != nil {
+			return echo.NewHTTPError(http.StatusInternalServerError)
+		}
+		areq := authn.AuthnVerifyTokenReq{
+			Token: token,
+		}
+		rs, err := authc.VerifyToken(areq)
 
-		if err != nil || !rs.Verified {
+		if err != nil || !rs.Varid {
 			return echo.NewHTTPError(http.StatusUnauthorized)
 		}
 		ac := ctx.InitAuthConctext(c, rs.UserID)
-		if err != nil || !rs.Verified {
+		if err != nil || !rs.Varid {
 			return echo.NewHTTPError(http.StatusInternalServerError)
 		}
 		return next(ac)

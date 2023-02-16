@@ -27,35 +27,38 @@ func InitTwitterAuth() (TwitterAuth, error) {
 	}, nil
 }
 
-func (a TwitterAuth) Authenticate(accessToken adapter.TwitterAccessToken, accessSecret adapter.TwitterAccessSecret) (adapter.UserID, adapter.TwitterProfile, error) {
-	token := oauth1.NewToken(string(accessToken), string(accessSecret))
+func (a TwitterAuth) Authenticate(req adapter.TwitterAuthenticateReq) (adapter.TwitterAuthenticateRes, error) {
+	token := oauth1.NewToken(req.AccessToken, req.AccessSecret)
 	u, err := a.twrepo.Get(token)
 	if err != nil {
-		return "", adapter.TwitterProfile{}, err
+		return adapter.TwitterAuthenticateRes{}, err
 	}
 	ex, err := a.authrepo.Exist(u.ID)
 	if err != nil {
-		return "", adapter.TwitterProfile{}, err
+		return adapter.TwitterAuthenticateRes{}, err
 	}
 	if !ex {
 		m, err := model.InitTwitterUserIdentity(u.ID)
 		if err != nil {
-			return "", adapter.TwitterProfile{}, err
+			return adapter.TwitterAuthenticateRes{}, err
 		}
 		_, err = a.authrepo.Create(m)
 		if err != nil {
-			return "", adapter.TwitterProfile{}, err
+			return adapter.TwitterAuthenticateRes{}, err
 		}
 	}
 	at, err := a.authrepo.GetByTiwtterUserID(u.ID)
 	if err != nil {
-		return "", adapter.TwitterProfile{}, err
+		return adapter.TwitterAuthenticateRes{}, err
 	}
 
-	return adapter.UserID(at.TwitterUserID), adapter.TwitterProfile{
-		ID:         string(u.ID),
-		ScreenName: string(u.Name),
-		Name:       string(u.Name),
-		ImageURL:   string(u.ProfileImageUrl),
+	return adapter.TwitterAuthenticateRes{
+		UserID: string(at.UserID),
+		Profile: adapter.TwitterProfile{
+			ID:         string(u.ID),
+			ScreenName: string(u.Name),
+			Name:       string(u.Name),
+			ImageURL:   string(u.ProfileImageUrl),
+		},
 	}, nil
 }

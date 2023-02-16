@@ -21,18 +21,24 @@ type Authn struct {
 	tokenSvc svc.TokenSvc
 }
 
-func (a Authn) VerifyToken(token adapter.Token) (adapter.UserID, adapter.Varid, error) {
-	payload, err := a.tokenSvc.Parse(string(token))
-	return adapter.UserID(payload.UserID), err == nil, err
+func (a Authn) VerifyToken(req adapter.AuthnVerifyTokenReq) (adapter.AuthnVerifyTokenRes, error) {
+	payload, err := a.tokenSvc.Parse(req.Token)
+	if err != nil {
+		return adapter.AuthnVerifyTokenRes{}, err
+	}
+	return adapter.AuthnVerifyTokenRes{
+		UserID: string(payload.UserID),
+		Varid:  err == nil,
+	}, nil
 }
 
-func (a Authn) EncodeToken(userid adapter.UserID) (adapter.Token, error) {
+func (a Authn) EncodeToken(req adapter.AuthnEncodeTokenReq) (adapter.AuthnEncodeTokenRes, error) {
 	payload := svc.Payload{
-		UserID: model.UserID(userid),
+		UserID: model.UserID(req.UserID),
 	}
 	token, err := a.tokenSvc.Encode(payload)
 	if err != nil {
-		return "", err
+		return adapter.AuthnEncodeTokenRes{}, err
 	}
-	return adapter.Token(token), nil
+	return adapter.AuthnEncodeTokenRes{Token: token}, nil
 }
