@@ -3,9 +3,9 @@ package di
 import (
 	"fmt"
 
-	"github.com/mrymam/monorepo/server/pkg/env"
-	"github.com/mrymam/monorepo/server/pkg/rds"
-	"github.com/mrymam/monorepo/server/svc/post/config"
+	"github.com/mrymam/radio_rec/server/pkg/env"
+	"github.com/mrymam/radio_rec/server/pkg/rds"
+	"github.com/mrymam/radio_rec/server/svc/post/config"
 	"gorm.io/gorm"
 )
 

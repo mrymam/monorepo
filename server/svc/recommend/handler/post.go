@@ -4,9 +4,9 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"github.com/mrymam/monorepo/server/pkg/http/response"
-	"github.com/mrymam/monorepo/server/svc/post/domain/model/post"
-	"github.com/mrymam/monorepo/server/svc/post/infra/repository"
+	"github.com/mrymam/radio_rec/server/pkg/http/response"
+	"github.com/mrymam/radio_rec/server/svc/post/domain/model/post"
+	"github.com/mrymam/radio_rec/server/svc/post/infra/repository"
 )
 
 type PostHander struct {

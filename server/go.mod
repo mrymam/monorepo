@@ -1,4 +1,4 @@
-module github.com/mrymam/monorepo/server
+module github.com/mrymam/radio_rec/server
 
 go 1.19
 

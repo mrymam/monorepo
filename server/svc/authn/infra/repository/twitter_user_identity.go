@@ -1,9 +1,9 @@
 package repository
 
 import (
-	"github.com/mrymam/monorepo/server/svc/authn/domain/model"
-	"github.com/mrymam/monorepo/server/svc/authn/infra/entity"
-	"github.com/mrymam/monorepo/server/svc/post/di"
+	"github.com/mrymam/radio_rec/server/svc/authn/domain/model"
+	"github.com/mrymam/radio_rec/server/svc/authn/infra/entity"
+	"github.com/mrymam/radio_rec/server/svc/post/di"
 	"gorm.io/gorm"
 )
 

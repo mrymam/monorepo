@@ -2,8 +2,8 @@ package router
 
 import (
 	"github.com/labstack/echo/v4"
-	account "github.com/mrymam/monorepo/server/svc/account/handler"
-	"github.com/mrymam/monorepo/server/svc/post/middleware"
+	account "github.com/mrymam/radio_rec/server/svc/account/handler"
+	"github.com/mrymam/radio_rec/server/svc/recommend/middleware"
 )
 
 func Router(e *echo.Group) error {

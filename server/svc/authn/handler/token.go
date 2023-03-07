@@ -1,10 +1,10 @@
 package handler
 
 import (
-	adapter "github.com/mrymam/monorepo/server/adapter/svc/authn"
-	"github.com/mrymam/monorepo/server/svc/authn/di"
-	"github.com/mrymam/monorepo/server/svc/authn/domain/model"
-	"github.com/mrymam/monorepo/server/svc/authn/domain/svc"
+	adapter "github.com/mrymam/radio_rec/server/adapter/svc/authn"
+	"github.com/mrymam/radio_rec/server/svc/authn/di"
+	"github.com/mrymam/radio_rec/server/svc/authn/domain/model"
+	"github.com/mrymam/radio_rec/server/svc/authn/domain/svc"
 )
 
 func InitAuthn() (Authn, error) {

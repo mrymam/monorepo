@@ -5,13 +5,13 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"github.com/mrymam/monorepo/server/adapter/svc/authn"
-	authnf "github.com/mrymam/monorepo/server/adapter/svc/authn/factory"
-	"github.com/mrymam/monorepo/server/pkg/http/response"
-	"github.com/mrymam/monorepo/server/svc/account/ctx"
-	"github.com/mrymam/monorepo/server/svc/account/domain/model/profile"
-	"github.com/mrymam/monorepo/server/svc/account/domain/model/user"
-	"github.com/mrymam/monorepo/server/svc/account/infra/repository"
+	"github.com/mrymam/radio_rec/server/adapter/svc/authn"
+	authnf "github.com/mrymam/radio_rec/server/adapter/svc/authn/factory"
+	"github.com/mrymam/radio_rec/server/pkg/http/response"
+	"github.com/mrymam/radio_rec/server/svc/account/ctx"
+	"github.com/mrymam/radio_rec/server/svc/account/domain/model/profile"
+	"github.com/mrymam/radio_rec/server/svc/account/domain/model/user"
+	"github.com/mrymam/radio_rec/server/svc/account/infra/repository"
 )
 
 type AccountHander struct {

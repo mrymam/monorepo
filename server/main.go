@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/labstack/echo/v4"
-	"github.com/mrymam/monorepo/server/runner"
+	"github.com/mrymam/radio_rec/server/runner"
 )
 
 func main() {

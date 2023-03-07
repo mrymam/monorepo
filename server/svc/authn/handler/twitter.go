@@ -2,9 +2,9 @@ package handler
 
 import (
 	"github.com/dghubble/oauth1"
-	adapter "github.com/mrymam/monorepo/server/adapter/svc/authn"
-	"github.com/mrymam/monorepo/server/svc/authn/domain/model"
-	"github.com/mrymam/monorepo/server/svc/authn/infra/repository"
+	adapter "github.com/mrymam/radio_rec/server/adapter/svc/authn"
+	"github.com/mrymam/radio_rec/server/svc/authn/domain/model"
+	"github.com/mrymam/radio_rec/server/svc/authn/infra/repository"
 )
 
 type TwitterAuth struct {

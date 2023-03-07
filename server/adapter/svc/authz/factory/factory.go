@@ -1,8 +1,8 @@
 package factory
 
 import (
-	"github.com/mrymam/monorepo/server/adapter/svc/authz"
-	"github.com/mrymam/monorepo/server/svc/authz/handler"
+	"github.com/mrymam/radio_rec/server/adapter/svc/authz"
+	"github.com/mrymam/radio_rec/server/svc/authz/handler"
 )
 
 func InitSlackOAuth2() (authz.SlackOAuth2, error) {

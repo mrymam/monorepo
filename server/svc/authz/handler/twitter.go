@@ -1,9 +1,9 @@
 package handler
 
 import (
-	adapter "github.com/mrymam/monorepo/server/adapter/svc/authz"
-	"github.com/mrymam/monorepo/server/svc/authz/domain/svc"
-	svcimpl "github.com/mrymam/monorepo/server/svc/authz/svc"
+	adapter "github.com/mrymam/radio_rec/server/adapter/svc/authz"
+	"github.com/mrymam/radio_rec/server/svc/authz/domain/svc"
+	svcimpl "github.com/mrymam/radio_rec/server/svc/authz/svc"
 )
 
 type TwitterAuth1 struct {

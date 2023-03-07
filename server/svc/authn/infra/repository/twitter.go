@@ -6,9 +6,9 @@ import (
 
 	"github.com/dghubble/oauth1"
 	"github.com/dghubble/oauth1/twitter"
-	"github.com/mrymam/monorepo/server/pkg/setting"
-	"github.com/mrymam/monorepo/server/svc/authn/domain/model"
-	"github.com/mrymam/monorepo/server/svc/authn/infra/entity"
+	"github.com/mrymam/radio_rec/server/pkg/setting"
+	"github.com/mrymam/radio_rec/server/svc/authn/domain/model"
+	"github.com/mrymam/radio_rec/server/svc/authn/infra/entity"
 )
 
 func InitTwitterUserRepo() (TwitterUserRepo, error) {

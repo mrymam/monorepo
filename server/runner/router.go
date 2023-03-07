@@ -3,7 +3,7 @@ package runner
 import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	post "github.com/mrymam/monorepo/server/svc/post/router"
+	post "github.com/mrymam/radio_rec/server/svc/post/router"
 )
 
 type router func(e *echo.Group) error

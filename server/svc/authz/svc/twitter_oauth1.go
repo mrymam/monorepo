@@ -3,8 +3,8 @@ package svc
 import (
 	"github.com/dghubble/oauth1"
 	"github.com/dghubble/oauth1/twitter"
-	"github.com/mrymam/monorepo/server/pkg/setting"
-	"github.com/mrymam/monorepo/server/svc/authz/domain/svc"
+	"github.com/mrymam/radio_rec/server/pkg/setting"
+	"github.com/mrymam/radio_rec/server/svc/authz/domain/svc"
 )
 
 type TwitterAuth1Svc struct {

@@ -1,7 +1,7 @@
 package svc
 
 import (
-	"github.com/mrymam/monorepo/server/svc/authn/domain/model"
+	"github.com/mrymam/radio_rec/server/svc/authn/domain/model"
 )
 
 type TokenSvc interface {
